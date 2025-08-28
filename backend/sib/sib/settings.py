@@ -1,14 +1,15 @@
 from pathlib import Path
 import os
+from decouple import config
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-0=61gv5x=!d6dh)(y=m@nx-*_g4(6hku#^m-ha_d5aw8q^k8z'
+# Security settings - use environment variables
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-0=61gv5x=!d6dh)(y=m@nx-*_g4(6hku#^m-ha_d5aw8q^k8z')
 
-DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
+DEBUG = config('DEBUG', default=True, cast=bool)
 
-# Allow localhost and internal network during development
-ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1,localhost').split(',')
 
 INSTALLED_APPS = [
     'jazzmin',  # Must be FIRST - replaces admin_interface
@@ -72,10 +73,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'sib.wsgi.application'
 
+# Database configuration - Using environment variables
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': config('DB_ENGINE', default='django.db.backends.postgresql'),
+        'NAME': config('DB_NAME', default='sib_db'),
+        'USER': config('DB_USER', default='postgres'),
+        'PASSWORD': config('DB_PASSWORD', default=''),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default='5432'),
     }
 }
 
@@ -86,30 +92,27 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-LANGUAGE_CODE = 'fr-fr'
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = config('LANGUAGE_CODE', default='fr-fr')
+TIME_ZONE = config('TIME_ZONE', default='UTC')
 USE_I18N = True
 USE_TZ = True
 
 # Static files configuration
-STATIC_URL = 'static/'
+STATIC_URL = config('STATIC_URL', default='static/')
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / config('STATIC_ROOT', default='staticfiles')
+
+# Media files
+MEDIA_URL = config('MEDIA_URL', default='/media/')
+MEDIA_ROOT = BASE_DIR / config('MEDIA_ROOT', default='media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS configuration
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "http://127.0.0.1:3000",
-    "http://127.0.0.1:5173",
-    "http://localhost:5174",
-    "http://127.0.0.1:5174",
-]
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = config('CORS_ALLOWED_ORIGINS', default='http://localhost:3000,http://127.0.0.1:3000').split(',')
+CORS_ALLOW_CREDENTIALS = config('CORS_ALLOW_CREDENTIALS', default=True, cast=bool)
 CORS_ALLOW_METHODS = ['DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT']
 CORS_ALLOW_HEADERS = [
     'accept', 'accept-encoding', 'authorization', 'content-type',
@@ -129,6 +132,20 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
 }
 
+# Security settings
+SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=False, cast=bool)
+SECURE_BROWSER_XSS_FILTER = config('SECURE_BROWSER_XSS_FILTER', default=True, cast=bool)
+SECURE_CONTENT_TYPE_NOSNIFF = config('SECURE_CONTENT_TYPE_NOSNIFF', default=True, cast=bool)
+X_FRAME_OPTIONS = config('X_FRAME_OPTIONS', default='DENY')
+
+# Email configuration
+EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_PORT = config('EMAIL_PORT', default=1025, cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=False, cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+
 # Jazzmin Configuration with Red Theme and Logo
 JAZZMIN_SETTINGS = {
     # Main Settings with Logo
@@ -145,9 +162,6 @@ JAZZMIN_SETTINGS = {
     "search_model": ["auth.User", "inventory_app.MatierePremiere", "sales_app.Client"],
     "user_avatar": None,
     "show_recent_actions": False,
-
-    # Top Menu Links
-   
 
     # User Menu on the right
     "usermenu_links": [

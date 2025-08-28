@@ -1,4 +1,0 @@
-pip install djangorestframework
-pip install markdown
-pip install django-cors-headers
-pip install django-unfold
