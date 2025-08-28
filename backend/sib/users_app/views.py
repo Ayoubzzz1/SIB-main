@@ -17,16 +17,15 @@ class UtilisateurViewSet(LoggingMixin, viewsets.ModelViewSet):
         if not self.request.user.is_authenticated:
             return Utilisateur.objects.none()
 
-        try:
-            user_profile = self.request.user.utilisateur
-        except ObjectDoesNotExist:
-            if self.request.user.is_staff or self.request.user.is_superuser:
-                return Utilisateur.objects.all().select_related('user')
-            return Utilisateur.objects.none()
+        # Check if user is superuser or staff
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return Utilisateur.objects.all().select_related('user')
 
-        if user_profile.role == 'admin':
+        # Check if user belongs to Administrateurs group
+        if self.request.user.groups.filter(name='Administrateurs').exists():
             return Utilisateur.objects.all().select_related('user')
         
+        # Regular users can only see their own profile
         return Utilisateur.objects.filter(user=self.request.user).select_related('user')
 
     def destroy(self, request, *args, **kwargs):

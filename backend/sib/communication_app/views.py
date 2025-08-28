@@ -21,8 +21,12 @@ class MessageViewSet(LoggingMixin, viewsets.ModelViewSet):
     def get_queryset(self):
         # Les utilisateurs peuvent voir leurs messages envoyés et reçus
         if self.request.user.is_authenticated and hasattr(self.request.user, 'utilisateur'):
-            if self.request.user.utilisateur.role == 'admin':
+            # Check if user is admin (superuser, staff, or belongs to Administrateurs group)
+            if (self.request.user.is_superuser or 
+                self.request.user.is_staff or 
+                self.request.user.groups.filter(name='Administrateurs').exists()):
                 return Message.objects.all().select_related('id_expediteur', 'id_destinataire')
+            
             return Message.objects.filter(
                 id_expediteur=self.request.user.utilisateur
             ) | Message.objects.filter(

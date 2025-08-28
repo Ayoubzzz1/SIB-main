@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from .models import Utilisateur, UtilisateurEntrepot
 
 class UserSerializer(serializers.ModelSerializer):
@@ -86,18 +86,30 @@ class UtilisateurSerializer(serializers.ModelSerializer):
         required=False,
         help_text="Liste des IDs des entrepôts auxquels l'utilisateur aura accès"
     )
+    group_name = serializers.ChoiceField(
+        choices=[
+            ('Commerciaux', 'Commerciaux'),
+            ('Magasiniers', 'Magasiniers'),
+            ('Ouvriers de production', 'Ouvriers de production'),
+            ('Administrateurs', 'Administrateurs')
+        ],
+        write_only=True,
+        required=False,
+        help_text="Groupe Django auquel assigner l'utilisateur"
+    )
 
     class Meta:
         model = Utilisateur
         fields = (
             'id', 'user', 'user_id', 'user_data', 'user_update_data', 
-            'nom', 'role', 'acces_tous_entrepots', 'cree_le',
+            'nom', 'group_name', 'acces_tous_entrepots', 'cree_le',
             'entrepots_autorises', 'entrepots_ids'
         )
         read_only_fields = ('id', 'cree_le')
 
     def create(self, validated_data):
         entrepots_ids = validated_data.pop('entrepots_ids', [])
+        group_name = validated_data.pop('group_name', None)
         user_data = validated_data.pop('user_data', None)
         user_id = validated_data.pop('user_id', None)
 
@@ -112,6 +124,14 @@ class UtilisateurSerializer(serializers.ModelSerializer):
             )
         else:
             raise serializers.ValidationError("Un compte utilisateur Django doit être lié ou créé.")
+
+        # Assign user to group if specified
+        if group_name:
+            try:
+                group = Group.objects.get(name=group_name)
+                user_instance.groups.add(group)
+            except Group.DoesNotExist:
+                raise serializers.ValidationError(f"Le groupe '{group_name}' n'existe pas.")
 
         # Check if a Utilisateur profile was already created by the signal
         try:
@@ -146,6 +166,7 @@ class UtilisateurSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         entrepots_ids = validated_data.pop('entrepots_ids', None)
+        group_name = validated_data.pop('group_name', None)
         user_data = validated_data.pop('user_data', None)
         user_update_data = validated_data.pop('user_update_data', None)
         user_id = validated_data.pop('user_id', None)
@@ -162,6 +183,16 @@ class UtilisateurSerializer(serializers.ModelSerializer):
                     else:
                         setattr(user_instance, attr, value)
             user_instance.save()
+
+        # Update group assignment if specified
+        if group_name:
+            try:
+                group = Group.objects.get(name=group_name)
+                # Clear existing groups and assign to new group
+                instance.user.groups.clear()
+                instance.user.groups.add(group)
+            except Group.DoesNotExist:
+                raise serializers.ValidationError(f"Le groupe '{group_name}' n'existe pas.")
 
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
