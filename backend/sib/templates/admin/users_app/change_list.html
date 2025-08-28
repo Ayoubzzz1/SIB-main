@@ -1,0 +1,51 @@
+{% extends "admin/change_list.html" %}
+{% load static %}
+
+{% block extrahead %}
+{{ block.super }}
+<script>
+function printItem(id, type) {
+    // Get the current URL and construct the print URL
+    const currentUrl = window.location.pathname;
+    const printUrl = currentUrl + id + '/print/';
+    
+    // Open the print URL in a new window
+    const printWindow = window.open(printUrl, '_blank');
+    
+    // Wait for the page to load and then trigger print
+    printWindow.onload = function() {
+        printWindow.print();
+    };
+}
+
+function printAll(url) {
+    // Open the print all URL in a new window
+    const printWindow = window.open(url, '_blank');
+    
+    // Wait for the page to load and then trigger print
+    printWindow.onload = function() {
+        printWindow.print();
+    };
+}
+</script>
+{% endblock %}
+
+{% block object-tools-items %}
+{{ block.super }}
+{% if show_print_all %}
+<li>
+    <a href="{{ print_all_url }}" target="_blank" style="background-color: #007cba; color: white; border: none; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-size: 13px;">
+        🖨️ Imprimer tout
+    </a>
+</li>
+{% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            font-size: 12px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            color: #333;
+        }
+        .header p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .detail-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .detail-section h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        .detail-row {
+            display: flex;
+            margin: 8px 0;
+        }
+        .detail-label {
+            font-weight: bold;
+            width: 150px;
+            color: #555;
+        }
+        .detail-value {
+            flex: 1;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+        }
+        .movement-type {
+            font-weight: bold;
+        }
+        .movement-entree { color: #28a745; }
+        .movement-sortie { color: #dc3545; }
+        .movement-ajustement { color: #ffc107; }
+        .movement-transfert { color: #17a2b8; }
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ title }}</h1>
+        <p>Généré le: {{ print_date|date:"d/m/Y H:i" }}</p>
+    </div>
+
+    <div class="detail-section">
+        <h3>Informations Générales</h3>
+        <div class="detail-row">
+            <div class="detail-label">Article:</div>
+            <div class="detail-value">{{ movement.article }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Type de Mouvement:</div>
+            <div class="detail-value movement-type movement-{{ movement.type_mouvement }}">
+                {{ movement.get_type_mouvement_display }}
+            </div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Motif:</div>
+            <div class="detail-value">{{ movement.get_motif_display }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Quantité:</div>
+            <div class="detail-value">{{ movement.quantite }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Entrepôt:</div>
+            <div class="detail-value">{{ movement.entrepot.nom }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Utilisateur:</div>
+            <div class="detail-value">{{ movement.utilisateur.nom }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Date:</div>
+            <div class="detail-value">{{ movement.date_mouvement|date:"d/m/Y H:i" }}</div>
+        </div>
+    </div>
+
+    <div class="detail-section">
+        <h3>Source et Destination</h3>
+        <div class="detail-row">
+            <div class="detail-label">Source:</div>
+            <div class="detail-value">
+                {% if movement.source_type == 'fournisseur' and movement.fournisseur_source %}
+                    {{ movement.fournisseur_source.nom_entreprise }}
+                {% elif movement.source_type == 'entrepot' and movement.entrepot_source_fk %}
+                    {{ movement.entrepot_source_fk.nom }}
+                {% elif movement.source_nom %}
+                    {{ movement.source_nom }}
+                {% else %}
+                    -
+                {% endif %}
+            </div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Destination:</div>
+            <div class="detail-value">
+                {% if movement.destination_type == 'client' and movement.client_destination %}
+                    {{ movement.client_destination.nom_entreprise }}
+                {% elif movement.destination_type == 'entrepot' and movement.entrepot_destination_fk %}
+                    {{ movement.entrepot_destination_fk.nom }}
+                {% elif movement.destination_nom %}
+                    {{ movement.destination_nom }}
+                {% else %}
+                    -
+                {% endif %}
+            </div>
+        </div>
+        {% if movement.reference %}
+        <div class="detail-row">
+            <div class="detail-label">Référence:</div>
+            <div class="detail-value">{{ movement.reference }}</div>
+        </div>
+        {% endif %}
+        {% if movement.commentaire %}
+        <div class="detail-row">
+            <div class="detail-label">Commentaire:</div>
+            <div class="detail-value">{{ movement.commentaire }}</div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="footer">
+        <p>SIB - Système d'Inventaire et de Bilan</p>
+        <p>Page générée automatiquement</p>
+    </div>
+</body>
+</html> 

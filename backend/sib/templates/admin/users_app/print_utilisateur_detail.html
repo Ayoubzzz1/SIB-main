@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            font-size: 12px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            color: #333;
+        }
+        .header p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .detail-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .detail-section h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        .detail-row {
+            display: flex;
+            margin: 8px 0;
+        }
+        .detail-label {
+            font-weight: bold;
+            width: 150px;
+            color: #555;
+        }
+        .detail-value {
+            flex: 1;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10px;
+            color: #666;
+        }
+        .role {
+            font-weight: bold;
+        }
+        .role-admin { color: #dc3545; }
+        .role-commercial { color: #28a745; }
+        .role-magasin { color: #ffc107; }
+        .role-production { color: #17a2b8; }
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ title }}</h1>
+        <p>Généré le: {{ print_date|date:"d/m/Y H:i" }}</p>
+    </div>
+
+    <div class="detail-section">
+        <h3>Informations Générales</h3>
+        <div class="detail-row">
+            <div class="detail-label">Nom:</div>
+            <div class="detail-value">{{ user.nom }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Nom d'utilisateur:</div>
+            <div class="detail-value">{{ user.user.username }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Email:</div>
+            <div class="detail-value">{{ user.user.email }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Rôle:</div>
+            <div class="detail-value role role-{{ user.role }}">
+                {{ user.get_role_display }}
+            </div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Accès Tous Entrepôts:</div>
+            <div class="detail-value">{{ user.acces_tous_entrepots|yesno:"Oui,Non" }}</div>
+        </div>
+        <div class="detail-row">
+            <div class="detail-label">Créé le:</div>
+            <div class="detail-value">{{ user.cree_le|date:"d/m/Y H:i" }}</div>
+        </div>
+    </div>
+
+    {% if not user.acces_tous_entrepots %}
+    <div class="detail-section">
+        <h3>Accès aux Entrepôts</h3>
+        {% if user.entrepots_autorises.all %}
+            {% for acces in user.entrepots_autorises.all %}
+            <div class="detail-row">
+                <div class="detail-label">{{ acces.entrepot.nom }}:</div>
+                <div class="detail-value">
+                    {% if acces.peut_lire %}Lecture{% endif %}
+                    {% if acces.peut_modifier %}{% if acces.peut_lire %}, {% endif %}Modification{% endif %}
+                    {% if acces.peut_supprimer %}{% if acces.peut_lire or acces.peut_modifier %}, {% endif %}Suppression{% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="detail-row">
+                <div class="detail-value">Aucun accès spécifique configuré</div>
+            </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="footer">
+        <p>SIB - Système d'Inventaire et de Bilan</p>
+        <p>Page générée automatiquement</p>
+    </div>
+</body>
+</html> 

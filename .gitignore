@@ -1,0 +1,11 @@
+/.qodo
+/debug_orders.js
+/frontend
+/FRONTEND_PERMISSIONS_SUMMARY.md
+/README.md
+/ROLE_PERMISSIONS_SUMMARY.md
+/run_backend.bat
+/run_frontend.bat
+/test_backend_orders.py
+/test_comprehensive.py
+/test_orders.py

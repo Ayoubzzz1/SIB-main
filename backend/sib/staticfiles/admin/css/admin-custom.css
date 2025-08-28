@@ -1,0 +1,359 @@
+/* Custom CSS for Beautiful SIB Admin Interface */
+
+/* Import beautiful fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+/* Root variables for consistent theming */
+:root {
+    --sib-primary: #dc2626;
+    --sib-primary-light: #fca5a5;
+    --sib-primary-dark: #991b1b;
+    --sib-success: #059669;
+    --sib-warning: #d97706;
+    --sib-info: #0284c7;
+    --sib-gray-50: #f9fafb;
+    --sib-gray-100: #f3f4f6;
+    --sib-gray-200: #e5e7eb;
+    --sib-gray-800: #1f2937;
+    --sib-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --sib-shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Global font family */
+* {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif !important;
+}
+
+/* Main container enhancements */
+.main-container {
+    background: linear-gradient(135deg, var(--sib-gray-50) 0%, #ffffff 100%);
+    min-height: 100vh;
+}
+
+/* Header styling */
+.unfold-header {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--sib-gray-200);
+    box-shadow: var(--sib-shadow);
+}
+
+.unfold-header .navbar-brand {
+    font-weight: 700 !important;
+    color: var(--sib-primary) !important;
+    font-size: 1.5rem !important;
+}
+
+/* Sidebar beautiful styling */
+.unfold-sidebar {
+    background: linear-gradient(180deg, var(--sib-primary) 0%, var(--sib-primary-dark) 100%) !important;
+    border-right: none !important;
+    box-shadow: var(--sib-shadow-lg);
+}
+
+.unfold-sidebar .sidebar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    border-radius: 12px !important;
+    margin: 4px 12px !important;
+    padding: 12px 16px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    font-weight: 500 !important;
+}
+
+.unfold-sidebar .sidebar-nav .nav-link:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: white !important;
+    transform: translateX(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.unfold-sidebar .sidebar-nav .nav-link.active {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Sidebar section titles */
+.unfold-sidebar .sidebar-section-title {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-weight: 600 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    margin: 20px 16px 8px !important;
+}
+
+/* Sidebar badges */
+.unfold-sidebar .badge {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    border-radius: 12px !important;
+    font-size: 0.7rem !important;
+    padding: 4px 8px !important;
+    font-weight: 600 !important;
+}
+
+/* Search box in sidebar */
+.unfold-sidebar .sidebar-search {
+    margin: 16px 12px !important;
+}
+
+.unfold-sidebar .sidebar-search input {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
+    transition: all 0.3s ease !important;
+}
+
+.unfold-sidebar .sidebar-search input:focus {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1) !important;
+}
+
+.unfold-sidebar .sidebar-search input::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Main content area */
+.unfold-main {
+    background: transparent !important;
+    padding: 24px !important;
+}
+
+/* Cards and panels */
+.card, .panel {
+    border: none !important;
+    border-radius: 16px !important;
+    box-shadow: var(--sib-shadow) !important;
+    background: white !important;
+    overflow: hidden !important;
+    transition: all 0.3s ease !important;
+}
+
+.card:hover, .panel:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sib-shadow-lg) !important;
+}
+
+.card-header, .panel-heading {
+    background: linear-gradient(135deg, var(--sib-gray-50) 0%, white 100%) !important;
+    border-bottom: 1px solid var(--sib-gray-200) !important;
+    padding: 20px !important;
+    font-weight: 600 !important;
+    color: var(--sib-gray-800) !important;
+}
+
+/* Buttons styling */
+.btn {
+    border-radius: 12px !important;
+    font-weight: 500 !important;
+    padding: 8px 20px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: none !important;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--sib-primary) 0%, var(--sib-primary-dark) 100%) !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4) !important;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--sib-success) 0%, #047857 100%) !important;
+    color: white !important;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--sib-warning) 0%, #b45309 100%) !important;
+    color: white !important;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, var(--sib-info) 0%, #0369a1 100%) !important;
+    color: white !important;
+}
+
+/* Form styling */
+.form-control, .form-select {
+    border: 2px solid var(--sib-gray-200) !important;
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+    transition: all 0.3s ease !important;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--sib-primary) !important;
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1) !important;
+}
+
+/* Table styling */
+.table {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: var(--sib-shadow) !important;
+}
+
+.table thead th {
+    background: linear-gradient(135deg, var(--sib-primary) 0%, var(--sib-primary-dark) 100%) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    border: none !important;
+    padding: 16px !important;
+}
+
+.table tbody tr:hover {
+    background: var(--sib-gray-50) !important;
+    transform: scale(1.01);
+    transition: all 0.2s ease !important;
+}
+
+/* Pagination */
+.pagination .page-link {
+    border: none !important;
+    border-radius: 8px !important;
+    margin: 0 2px !important;
+    color: var(--sib-primary) !important;
+    font-weight: 500 !important;
+}
+
+.pagination .page-link:hover {
+    background: var(--sib-primary) !important;
+    color: white !important;
+}
+
+.pagination .page-item.active .page-link {
+    background: var(--sib-primary) !important;
+    color: white !important;
+}
+
+/* Dashboard widgets */
+.dashboard-widget {
+    background: linear-gradient(135deg, white 0%, var(--sib-gray-50) 100%) !important;
+    border: none !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    box-shadow: var(--sib-shadow) !important;
+    transition: all 0.3s ease !important;
+}
+
+.dashboard-widget:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sib-shadow-lg) !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .unfold-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease !important;
+    }
+    
+    .unfold-sidebar.show {
+        transform: translateX(0);
+    }
+    
+    .unfold-main {
+        padding: 16px !important;
+    }
+}
+
+/* Animation classes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Loading spinner */
+.spinner {
+    border: 3px solid var(--sib-gray-200);
+    border-top: 3px solid var(--sib-primary);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Success/Error messages */
+.alert {
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    font-weight: 500 !important;
+    margin-bottom: 20px !important;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d1fae5 0%, #ecfdf5 100%) !important;
+    color: var(--sib-success) !important;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%) !important;
+    color: var(--sib-primary-dark) !important;
+}
+
+.alert-warning {
+    background: linear-gradient(135deg, #fef3cd 0%, #fffbeb 100%) !important;
+    color: var(--sib-warning) !important;
+}
+
+/* Icons enhancement */
+.material-icons {
+    vertical-align: middle !important;
+    margin-right: 8px !important;
+}
+
+/* Collapsible sections */
+.collapse-toggle {
+    cursor: pointer !important;
+    user-select: none !important;
+    transition: all 0.3s ease !important;
+}
+
+.collapse-toggle:hover {
+    color: var(--sib-primary) !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--sib-gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sib-primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--sib-primary-dark);
+}

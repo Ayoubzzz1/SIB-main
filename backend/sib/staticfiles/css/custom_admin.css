@@ -1,0 +1,207 @@
+/* Custom CSS for SIB Admin Panel */
+
+/* Hide any logo from navbar */
+.navbar .navbar-brand img {
+    display: none !important;
+}
+
+/* Navbar - keep only text, no logo */
+.navbar-light .navbar-brand {
+    color: #000000 !important;
+    font-weight: bold !important;
+}
+
+/* Main content area - Black text */
+.content-wrapper {
+    color: #000000 !important;
+}
+
+/* All text in main content area */
+.content-wrapper p,
+.content-wrapper div,
+.content-wrapper span,
+.content-wrapper label,
+.content-wrapper th,
+.content-wrapper td,
+.content-wrapper h1,
+.content-wrapper h2,
+.content-wrapper h3,
+.content-wrapper h4,
+.content-wrapper h5,
+.content-wrapper h6,
+.content-wrapper .form-control,
+.content-wrapper .form-text,
+.content-wrapper .help-block {
+    color: #000000 !important;
+}
+
+/* Form inputs with black text */
+.content-wrapper input,
+.content-wrapper textarea,
+.content-wrapper select {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+}
+
+/* Table styling */
+.content-wrapper table {
+    color: #000000 !important;
+}
+
+.content-wrapper .table th,
+.content-wrapper .table td {
+    color: #000000 !important;
+    border-color: #dee2e6 !important;
+}
+
+/* Card content */
+.content-wrapper .card,
+.content-wrapper .card-body {
+    color: #000000 !important;
+}
+
+/* Breadcrumbs */
+.content-wrapper .breadcrumb {
+    background-color: #f8f9fa !important;
+}
+
+.content-wrapper .breadcrumb-item,
+.content-wrapper .breadcrumb-item a {
+    color: #000000 !important;
+}
+
+/* White navbar with black text - additional styling */
+.navbar-light .navbar-brand,
+.navbar-light .navbar-nav .nav-link,
+.navbar-light .navbar-text {
+    color: #000000 !important;
+}
+
+/* Ensure navbar background is white */
+.navbar-light {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+/* Red sidebar - ensure white text */
+.sidebar-dark-danger .nav-sidebar > .nav-item > .nav-link,
+.sidebar-dark-danger .nav-sidebar > .nav-item > .nav-link:hover,
+.sidebar-dark-danger .nav-sidebar > .nav-item > .nav-link:focus {
+    color: #ffffff !important;
+}
+
+/* Sidebar brand area with logo and SIB text */
+.sidebar-dark-danger .brand-link {
+    background-color: rgba(220, 53, 69, 0.8) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 0.8125rem 1rem !important;
+}
+
+.sidebar-dark-danger .brand-link:hover {
+    background-color: rgba(220, 53, 69, 0.9) !important;
+}
+
+/* Logo styling in sidebar - positioned next to SIB text */
+.brand-link .brand-image {
+    max-height: 35px !important;
+    width: auto !important;
+    margin-right: 0.5rem !important;
+    opacity: 1 !important;
+}
+
+/* SIB text next to logo in sidebar */
+.brand-link .brand-text {
+    color: #ffffff !important;
+    font-weight: bold !important;
+    font-size: 1.1rem !important;
+}
+
+/* User info area in sidebar */
+.sidebar-dark-danger .user-panel .info {
+    color: #ffffff !important;
+}
+
+.sidebar-dark-danger .user-panel .info a {
+    color: #ffffff !important;
+}
+
+/* Sidebar menu text white */
+.sidebar-dark-danger .nav-sidebar .nav-link p,
+.sidebar-dark-danger .nav-sidebar .nav-link i {
+    color: #ffffff !important;
+}
+
+/* Active menu item styling */
+.sidebar-dark-danger .nav-sidebar > .nav-item.menu-open > .nav-link,
+.sidebar-dark-danger .nav-sidebar > .nav-item > .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+/* Dropdown menu in sidebar */
+.sidebar-dark-danger .nav-sidebar .nav-treeview > .nav-item > .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    padding-left: 3rem !important;
+}
+
+.sidebar-dark-danger .nav-sidebar .nav-treeview > .nav-item > .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+}
+
+/* ========================================= */
+/* HIDE RECENT ACTIONS WIDGET FROM DASHBOARD */
+/* ========================================= */
+
+/* Hide recent actions module completely */
+#recent-actions-module {
+    display: none !important;
+}
+
+/* Alternative selectors for different Jazzmin versions */
+.module#recent-actions-module {
+    display: none !important;
+}
+
+.recent-actions {
+    display: none !important;
+}
+
+/* Hide module with "Recent Actions" title (English) */
+.module:has(h2:contains("Recent Actions")) {
+    display: none !important;
+}
+
+/* Hide module with "Actions récentes" title (French) */
+.module:has(h2:contains("Actions récentes")) {
+    display: none !important;
+}
+
+/* Alternative method - hide by header text */
+.module h2:contains("Recent Actions"),
+.module h2:contains("Actions récentes") {
+    display: none !important;
+}
+
+/* For AdminLTE based layouts */
+.info-box:has(.info-box-text:contains("Recent Actions")) {
+    display: none !important;
+}
+
+/* Hide any div containing recent actions */
+div[class*="recent"],
+div[id*="recent"] {
+    display: none !important;
+}
+
+/* More specific targeting for Jazzmin dashboard widgets */
+.col-lg-4 .module:has(h2:contains("Recent Actions")),
+.col-lg-4 .module:has(h2:contains("Actions récentes")) {
+    display: none !important;
+}
+
+/* If it's in a card format */
+.card:has(.card-header:contains("Recent Actions")),
+.card:has(.card-header:contains("Actions récentes")) {
+    display: none !important;
+}
