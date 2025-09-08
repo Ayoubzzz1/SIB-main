@@ -10,6 +10,23 @@ class Utilisateur(models.Model):
     # mot_de_passe_hash ne sera plus nécessaire ici si vous utilisez le système d'auth de Django
     cree_le = models.DateTimeField(auto_now_add=True, verbose_name="Créé le")
     
+    # Team status field
+    STATUT_EQUIPE_CHOICES = [
+        ('actif', 'Actif'),
+        ('inactif', 'Inactif'),
+        ('vacances', 'En vacances'),
+        ('maladie', 'En arrêt maladie'),
+        ('formation', 'En formation'),
+    ]
+    
+    statut_equipe = models.CharField(
+        max_length=20,
+        choices=STATUT_EQUIPE_CHOICES,
+        default='actif',
+        verbose_name="Statut équipe",
+        help_text="Statut actuel de l'utilisateur dans l'équipe"
+    )
+    
     # New field for warehouse-specific permissions
     acces_tous_entrepots = models.BooleanField(
         default=False, 
@@ -24,6 +41,18 @@ class Utilisateur(models.Model):
 
     def __str__(self):
         return self.nom
+    
+    def get_team_role(self):
+        """
+        Returns the user's team role based on their groups
+        """
+        if self.user.is_superuser:
+            return "Super Administrateur"
+        
+        groups = self.user.groups.all()
+        if groups:
+            return ", ".join([group.name for group in groups])
+        return "Aucun rôle assigné"
     
     def get_accessible_warehouses(self):
         """
